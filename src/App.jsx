@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 // 1. 타입과 구조체는 named import로 가져옵니다.
 import init, { Universe, Cell } from "../pkg";
 import Menu from "./pattern/Menu";
+import Rule from "./Rule";
 import { useDarkMode } from "./DarkModeContext";
 
 const GRID_COLOR = "#E5E7EB";
@@ -16,7 +17,6 @@ const DARK_ALIVE_COLOR = "#8b5cf6";
 function GameOfLife() {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [universe, setUniverse] = useState(null);
-  // 2. Wasm 메모리 객체를 저장할 상태를 만듭니다.
   const [wasmMemory, setWasmMemory] = useState(null);
   const [isRunning, setIsRunning] = useState(true);
   const [isWasmLoaded, setIsWasmLoaded] = useState(false);
@@ -27,6 +27,7 @@ function GameOfLife() {
   const [selectedPattern, setSelectedPattern] = useState(null);
   const [previewPos, setPreviewPos] = useState(null); // {row, col} | null
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isRuleModalOpen, setIsRuleModalOpen] = useState(false);
 
   const animationRef = useRef(null);
   const canvasRef = useRef(null);
@@ -66,14 +67,11 @@ function GameOfLife() {
   useEffect(() => {
     const loadWasm = async () => {
       try {
-        // 3. init()이 반환하는 객체에 memory가 포함되어 있습니다.
         const wasmModule = await init();
         console.log("WebAssembly 모듈 초기화 완료");
 
-        // 4. 반환된 객체에서 memory를 꺼내 상태에 저장합니다.
         setWasmMemory(wasmModule.memory);
 
-        // 이제 named import로 가져온 Universe와 Cell을 사용할 수 있습니다.
         const newUniverse = Universe.new();
         setUniverse(newUniverse);
         setIsWasmLoaded(true);
@@ -355,11 +353,11 @@ function GameOfLife() {
 
   if (!isWasmLoaded) {
     return (
-      <div className="w-full h-full min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-400 to-purple-500 dark:from-indigo-900 dark:to-purple-900">
-        <div className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/20 dark:border-gray-700/20 max-w-[90vw] max-h-[90vh] overflow-auto">
+      <div className="min-w-screen min-h-screen flex items-center justify-center bg-gradient-to-br from-indigo-400 to-purple-500 dark:from-indigo-900 dark:to-purple-900">
+        <div className="bg-white/30 dark:bg-gray-800/30 backdrop-blur-xl rounded-3xl p-8 shadow-2xl border border-white/20 dark:border-gray-700/20 max-w-[90vw] max-h-[90vh] overflow-auto">
           <div className="flex flex-col items-center gap-4 py-10">
             <div className="loading-spinner w-10 h-10 border-4 border-indigo-200 dark:border-indigo-700 border-t-indigo-500 dark:border-t-indigo-400 rounded-full animate-spin"></div>
-            <div className="text-lg text-gray-600 dark:text-gray-300 font-semibold">WebAssembly 모듈 로딩 중...</div>
+            <div className="text-lg text-gray-600 dark:text-gray-300 font-semibold">Loading WebAssembly module...</div>
           </div>
         </div>
       </div>
@@ -414,6 +412,15 @@ function GameOfLife() {
               <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
             </svg>
             Pattern
+          </button>
+          <button
+            className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium rounded-lg transition-all duration-300 relative overflow-hidden font-inherit cursor-pointer bg-indigo-50 dark:bg-indigo-900/50 text-indigo-500 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-800"
+            onClick={() => setIsRuleModalOpen(true)}
+          >
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            Rule
           </button>
           <button
             className="flex items-center gap-1.5 px-4 py-2 text-xs font-medium rounded-lg transition-all duration-300 relative overflow-hidden font-inherit cursor-pointer bg-indigo-50 dark:bg-indigo-900/50 text-indigo-500 dark:text-indigo-400 border border-indigo-100 dark:border-indigo-800 hover:bg-indigo-100 dark:hover:bg-indigo-800"
@@ -478,6 +485,10 @@ function GameOfLife() {
         selectedPattern={selectedPattern}
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
+      />
+      <Rule
+        isOpen={isRuleModalOpen}
+        onClose={() => setIsRuleModalOpen(false)}
       />
     </div>
   );

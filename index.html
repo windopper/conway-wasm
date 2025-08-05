@@ -9,7 +9,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="./src/style.css" rel="stylesheet">
     <script>
-        // 페이지 로드 전에 다크모드 설정 적용 (깜빡임 방지)
         (function() {
             const saved = localStorage.getItem('darkMode');
             if (saved !== null) {
@@ -18,7 +17,6 @@
                     document.documentElement.classList.add('dark');
                 }
             } else {
-                // 시스템 다크모드 설정 확인
                 if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
                     document.documentElement.classList.add('dark');
                 }
