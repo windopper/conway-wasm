@@ -1,0 +1,40 @@
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;    
+    color: #1a1a1a;
+    overflow-x: auto;
+    margin: 0;
+    padding: 0;
+    transition: background 0.3s ease;
+}
+
+/* 다크모드 스타일 */
+.dark body {
+    background: linear-gradient(135deg, #1e1b4b 0%, #312e81 100%);
+    color: #f3f4f6;
+}
+
+/* 로딩 스피너 스타일 */
+.loading-spinner {
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}

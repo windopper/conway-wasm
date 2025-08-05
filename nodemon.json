@@ -1,0 +1,16 @@
+{
+  "watch": [
+    "src/lib.rs",
+    "Cargo.toml",
+    "Cargo.lock"
+  ],
+  "ext": "rs,toml",
+  "ignore": [
+    "node_modules",
+    "dist",
+    "pkg"
+  ],
+  "env": {
+    "NODE_ENV": "development"
+  }
+} 
