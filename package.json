@@ -4,7 +4,7 @@
         "build:wasm": "wasm-pack build --target web && node -e \"const fs=require('fs');const p='pkg/index.js';const c='export * from \\\"./conway_wasm.js\\\";\\nexport { default as init } from \\\"./conway_wasm.js\\\";\\n';fs.existsSync('pkg')&&fs.writeFileSync(p,c);console.log('✅ pkg/index.js 생성됨');\"",
         "build:wasm:dev": "wasm-pack build --target web --dev && node -e \"const fs=require('fs');const p='pkg/index.js';const c='export * from \\\"./conway_wasm.js\\\";\\nexport { default as init } from \\\"./conway_wasm.js\\\";\\n';fs.existsSync('pkg')&&fs.writeFileSync(p,c);console.log('✅ pkg/index.js 생성됨');\"",
         "serve": "webpack serve",
-        "start": "npm run build && npx http-server dist -p 3000 -o",
+        "start": "npx http-server dist -p 3000 -o",
         "dev": "concurrently \"nodemon\" \"webpack serve --mode development\"",
         "watch:wasm": "nodemon"
     },
