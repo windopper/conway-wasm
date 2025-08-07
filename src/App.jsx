@@ -366,10 +366,10 @@ function GameOfLife() {
 
   return (
     <div
-      className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-3xl p-8 pt-4 shadow-2xl border border-white/20 dark:border-gray-700/20 max-w-[90vw] max-h-[95vh] overflow-auto w-full h-full min-h-[400px] min-w-[320px] flex flex-col"
+      className="bg-white/95 dark:bg-gray-800/95 backdrop-blur-xl rounded-3xl p-8 pt-4 shadow-2xl border border-white/20 dark:border-gray-700/20 w-[90vw] h-[95vh] overflow-auto flex flex-col"
       ref={containerRef}
     >
-      <div className="flex flex-col items-center gap-3">
+      <div className="relative flex flex-col items-center gap-3 flex-1 min-h-0">
         {/* 버튼 영역 */}
         <div className="flex flex-wrap gap-2 justify-center w-full p-2 pb-4 border-b border-indigo-100 dark:border-indigo-800">
           <button
@@ -471,14 +471,16 @@ function GameOfLife() {
             <div className="text-xs text-purple-400 dark:text-purple-500 font-semibold mt-1 tracking-wider">Alive</div>
           </div>
         </div>
-        <canvas
-          ref={canvasRef}
-          id="game-of-life-canvas"
-          className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-white/20 dark:border-gray-700/20 block mx-auto"
-          onClick={handleCanvasClick}
-          onMouseMove={handleCanvasMouseMove}
-          onMouseLeave={handleCanvasMouseLeave}
-        ></canvas>
+        <div className="flex flex-col items-center justify-center w-full flex-1 min-h-0">
+          <canvas
+            ref={canvasRef}
+            id="game-of-life-canvas"
+            className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-white/20 dark:border-gray-700/20 block mx-auto"
+            onClick={handleCanvasClick}
+            onMouseMove={handleCanvasMouseMove}
+            onMouseLeave={handleCanvasMouseLeave}
+          ></canvas>
+        </div>
       </div>
       <Menu
         onPatternSelect={setSelectedPattern}
